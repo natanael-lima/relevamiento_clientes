@@ -4,201 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relevamiento de Clientes - Distribuidora El Indio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Librerías para procesamiento de Excel y CSV -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --accent: #2563eb;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --border: #cbd5e1;
-            --text: #0f172a;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 12px;
-        }
-
-        .header {
-            background: var(--primary);
-            color: white;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            margin: 0 0 4px 0;
-            font-size: 1.25rem;
-        }
-
-        .controls {
-            background: var(--card);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin-bottom: 16px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-        }
-
-        button, .file-label {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 9px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.88rem;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        button:hover, .file-label:hover {
-            opacity: 0.9;
-        }
-
-        button.export { background: #059669; }
-        button.demo { background: #475569; }
-
-        input[type="file"] { display: none; }
-
-        .search-box {
-            flex: 1;
-            min-width: 220px;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            background: var(--card);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            max-height: 72vh;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            text-align: left;
-        }
-
-        th, td {
-            padding: 10px 10px;
-            border-bottom: 1px solid var(--border);
-            white-space: nowrap;
-        }
-
-        th {
-            background: #f1f5f9;
-            color: #334155;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            font-weight: 700;
-        }
-
-        tr:hover { background-color: #f8fafc; }
-
-        .checkbox-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        input[type="text"].obs-input {
-            width: 100%;
-            min-width: 160px;
-            padding: 6px 8px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 0.85rem;
-        }
-
-        input[type="text"].obs-input:focus {
-            outline: 2px solid var(--accent);
-            border-color: transparent;
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 8px; }
-            .controls { flex-direction: column; align-items: stretch; }
-            .search-box { width: 100%; }
-            .checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-            th, td { padding: 8px 6px; font-size: 0.8rem; }
-        }
-    </style>
+    <!-- Iconos profesionales (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-gray-100 text-gray-900 font-sans p-3 sm:p-6 min-h-screen">
 
-    <div class="header">
-        <h1>Relevamiento de Clientes en Campo</h1>
-        <small>Distribuidora El Indio SRL</small>
-    </div>
+    <!-- Header / Banner Minimalista Blanco/Gris -->
+    <header class="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 mb-4 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <h1 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2.5">
+             Relevamiento de Clientes
+        </h1>
+        <small class="text-gray-500 font-medium flex items-center gap-1.5 text-xs sm:text-sm">
+            </i> Distribuidora El Indio SRL
+        </small>
+    </header>
 
-    <div class="controls">
-        <label class="file-label">
-            Importar Excel (.xlsx / .csv)
-            <input type="file" id="csvFileInput" accept=".csv, .xlsx, .xls">
+    <!-- Controles y Acciones -->
+    <div class="bg-white border border-gray-200 rounded-xl p-3 sm:p-4 mb-4 shadow-sm flex flex-col md:flex-row gap-3 items-stretch md:items-center">
+        <label class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-4 py-2.5 rounded-lg cursor-pointer inline-flex items-center justify-center gap-2 transition-colors">
+            <i class="fa-solid fa-file-excel"></i> Importar Excel / CSV
+            <input type="file" id="csvFileInput" accept=".csv, .xlsx, .xls" class="hidden">
         </label>
-        <button class="export" onclick="exportExcel()">Exportar Excel (.xlsx)</button>
-        <button class="demo" onclick="loadDemoData()">Cargar Ejemplo Ruta</button>
-        <input type="text" id="searchInput" class="search-box" placeholder="Buscar ID, nombre, localidad, dirección..." onkeyup="filterData()">
+        
+        <button onclick="exportExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2.5 rounded-lg inline-flex items-center justify-center gap-2 transition-colors">
+            <i class="fa-solid fa-file-arrow-down"></i> Exportar Excel (.xlsx)
+        </button>
+
+        <button onclick="loadDemoData()" class="bg-gray-700 hover:bg-gray-800 text-white font-semibold text-sm px-4 py-2.5 rounded-lg inline-flex items-center justify-center gap-2 transition-colors">
+            <i class="fa-solid fa-bolt"></i> Cargar Ejemplo Ruta
+        </button>
+
+        <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input type="text" id="searchInput" onkeyup="filterData()" placeholder="Buscar ID, nombre, localidad, dirección..." 
+                   class="w-full bg-gray-50 border border-gray-300 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all">
+        </div>
     </div>
 
-    <div class="table-container">
-        <table id="dataTable">
+    <!-- Contenedor Principal Adaptable -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden max-h-[72vh] overflow-y-auto">
+        
+        <!-- VISTA DE ESCRITORIO (Tabla Tradicional) -->
+        <table id="dataTable" class="w-full text-left border-collapse hidden md:table">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Razón Social</th>
-                    <th>Dirección</th>
-                    <!--<th>Localidad</th>
-                    <th>Canal</th>-->
-                    <th>Venta (Ene-Oct)</th>
-                    <th>Estado Relevamiento</th>
-                    <th>Observación / Notas</th>
+                <tr class="bg-gray-50 border-b border-gray-200 text-gray-600 text-xs sm:text-sm sticky top-0 z-10 font-semibold">
+                    <th class="p-3"><i class="fa-solid fa-hashtag mr-1"></i> ID</th>
+                    <th class="p-3"><i class="fa-solid fa-store mr-1"></i> Razón Social</th>
+                    <th class="p-3"><i class="fa-solid fa-location-dot mr-1"></i> Dirección</th>
+                    <th class="p-3"><i class="fa-solid fa-map mr-1"></i> Localidad</th>
+                    <th class="p-3"><i class="fa-solid fa-tags mr-1"></i> Canal</th>
+                    <th class="p-3"><i class="fa-solid fa-sack-dollar mr-1"></i> Venta (Ene-Oct)</th>
+                    <th class="p-3"><i class="fa-solid fa-circle-check mr-1"></i> Estado Relevamiento</th>
+                    <th class="p-3"><i class="fa-solid fa-comment-dots mr-1"></i> Observación / Notas</th>
                 </tr>
             </thead>
-            <tbody id="tableBody">
-                <!-- Filas cargadas dinámicamente -->
+            <tbody id="tableBody" class="divide-y divide-gray-200 text-xs sm:text-sm">
+                <!-- Filas inyectadas por JS -->
             </tbody>
         </table>
+
+        <!-- VISTA MÓVIL (Tarjetas limpias en pantallas chicas) -->
+        <div id="cardsContainer" class="flex flex-col gap-3 p-3 md:hidden">
+            <!-- Tarjetas inyectadas por JS -->
+        </div>
     </div>
 
     <script>
         let clientsData = [];
-
-        // Opciones específicas para Relevamiento de Clientes
         const STATUS_OPTIONS = ["ACTIVO", "BAJA", "OTRO VENDEDOR"];
 
-        // Helper para mapear columnas con nombres flexibles (sensible a variaciones del Excel)
         function mapRowData(row) {
-            // Mapeo flexible de claves ignorando espacios/mayúsculas/caracteres
             const keys = Object.keys(row);
             const getVal = (possibleNames) => {
                 for (let p of possibleNames) {
@@ -223,10 +103,8 @@
         document.getElementById('csvFileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const fileName = file.name.toLowerCase();
 
-            // LECTURA DE ARCHIVOS EXCEL (.xlsx / .xls)
             if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
                 const reader = new FileReader();
                 reader.onload = function(evt) {
@@ -240,9 +118,7 @@
                     renderTable();
                 };
                 reader.readAsArrayBuffer(file);
-            } 
-            // LECTURA DE ARCHIVOS CSV
-            else {
+            } else {
                 Papa.parse(file, {
                     header: true,
                     skipEmptyLines: true,
@@ -254,49 +130,106 @@
             }
         });
 
+        // Clases Tailwind para los selectores de estado dinámicos
+        function getStatusClasses(status) {
+            const s = (status || '').toUpperCase();
+            if (s === 'BAJA') return 'bg-red-100 text-red-800 border-red-300';
+            if (s === 'OTRO VENDEDOR') return 'bg-amber-100 text-amber-800 border-amber-300';
+            return 'bg-emerald-100 text-emerald-800 border-emerald-300';
+        }
+
         function renderTable(filteredData = null) {
             const tbody = document.getElementById('tableBody');
+            const cardsContainer = document.getElementById('cardsContainer');
+            
             tbody.innerHTML = '';
+            cardsContainer.innerHTML = '';
+            
             const dataToRender = filteredData || clientsData;
 
             if (dataToRender.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:20px;">No se encontraron datos cargados.</td></tr>';
+                const emptyMsg = `<tr><td colspan="8" class="text-center py-10 text-gray-400">
+                    <i class="fa-solid fa-folder-open text-3xl mb-2 block"></i>No hay datos cargados. Importa un archivo o carga el ejemplo de ruta.
+                </td></tr>`;
+                tbody.innerHTML = emptyMsg;
+                cardsContainer.innerHTML = `<div class="text-center py-10 text-gray-400 bg-white rounded-lg border border-gray-200 p-4">
+                    <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>No hay datos cargados. Importa un archivo o usa el botón de ejemplo.
+                </div>`;
                 return;
             }
 
             dataToRender.forEach((item, index) => {
-                const tr = document.createElement('tr');
-                
-                // Construir opciones de radio button para los estados
-                let statusHtml = '<div class="checkbox-group">';
+                const currentStatus = (item.estado || 'ACTIVO').toUpperCase();
+                const ventaTexto = item.venta ? (item.venta.toLowerCase().includes('compra') ? item.venta : '$' + item.venta) : '-';
+
+                // Generador del Select estilizado con Tailwind
+                let selectHtml = `<select class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border outline-none cursor-pointer w-full sm:w-auto ${getStatusClasses(currentStatus)}" onchange="updateStatus(${index}, this)">`;
                 STATUS_OPTIONS.forEach(opt => {
-                    const isChecked = (item.estado || 'ACTIVO').toUpperCase() === opt ? 'checked' : '';
-                    statusHtml += `
-                        <label>
-                            <input type="radio" name="status_${index}" onchange="updateStatus(${index}, '${opt}')" ${isChecked}>
-                            ${opt}
-                        </label>`;
+                    const isSelected = currentStatus === opt ? 'selected' : '';
+                    selectHtml += `<option value="${opt}" ${isSelected}>${opt}</option>`;
                 });
-                statusHtml += '</div>';
-		        //<td>${item.localidad}</td>
-                //<td>${item.canal}</td>
+                selectHtml += `</select>`;
+
+                // 1. FILA DE TABLA (Escritorio)
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors";
                 tr.innerHTML = `
-                    <td><b>${item.id}</b></td>
-                    <td>${item.nombre}</td>
-                    <td>${item.direccion}</td>
-                    <td>${item.venta ? (item.venta.toLowerCase().includes('compra') ? item.venta : '$' + item.venta) : ''}</td>
-                    <td>${statusHtml}</td>
-                    <td>
-                        <input type="text" class="obs-input" value="${item.observacion || ''}" 
+                    <td class="p-3 font-semibold text-gray-700">${item.id}</td>
+                    <td class="p-3 font-medium text-gray-900">${item.nombre}</td>
+                    <td class="p-3 text-gray-600">${item.direccion}</td>
+                    <td class="p-3 text-gray-600">${item.localidad || '-'}</td>
+                    <td class="p-3 text-gray-600">${item.canal || '-'}</td>
+                    <td class="p-3 text-gray-700 font-medium">${ventaTexto}</td>
+                    <td class="p-3">${selectHtml}</td>
+                    <td class="p-3">
+                        <input type="text" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white" value="${item.observacion || ''}" 
                                onchange="updateObs(${index}, this.value)" placeholder="Añadir novedad...">
                     </td>
                 `;
                 tbody.appendChild(tr);
+
+                // 2. TARJETA ADAPTABLE (Móvil / Celular)
+                const card = document.createElement('div');
+                card.className = "bg-white border border-gray-200 rounded-lg p-3.5 shadow-xs flex flex-col gap-2.5";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs font-mono font-bold">ID: ${item.id}</span>
+                        <strong class="text-sm text-gray-900 text-right">${item.nombre}</strong>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                        <div><span class="text-gray-400 block text-[10px]">DIRECCIÓN</span> <b>${item.direccion}</b></div>
+                        <div><span class="text-gray-400 block text-[10px]">LOCALIDAD</span> <b>${item.localidad || '-'}</b></div>
+                        <div><span class="text-gray-400 block text-[10px]">CANAL</span> <b>${item.canal || '-'}</b></div>
+                        <div><span class="text-gray-400 block text-[10px]">VENTA</span> <b>${ventaTexto}</b></div>
+                    </div>
+                    <div class="border-t border-gray-100 pt-2 flex flex-col gap-2">
+                        <div>
+                            <span class="text-gray-400 block text-[10px] mb-1">ESTADO DE RELEVAMIENTO</span>
+                            ${selectHtml}
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block text-[10px] mb-1">OBSERVACIONES</span>
+                            <input type="text" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-600" value="${item.observacion || ''}" 
+                                   onchange="updateObs(${index}, this.value)" placeholder="Añadir novedad...">
+                        </div>
+                    </div>
+                `;
+                cardsContainer.appendChild(card);
             });
         }
 
-        function updateStatus(index, selectedOption) {
-            clientsData[index].estado = selectedOption;
+        function updateStatus(index, selectElement) {
+            const val = selectElement.value;
+            clientsData[index].estado = val;
+            
+            // Reflejar cambios visuales en tiempo real en ambas vistas si están abiertas
+            const selects = document.querySelectorAll(`select`);
+            selects.forEach(sel => {
+                if(sel.onchange && sel.getAttribute('onchange').includes(`updateStatus(${index}`)) {
+                    sel.value = val;
+                    sel.className = `text-xs font-semibold px-2.5 py-1.5 rounded-lg border outline-none cursor-pointer w-full sm:w-auto ${getStatusClasses(val)}`;
+                }
+            });
         }
 
         function updateObs(index, value) {
@@ -315,44 +248,50 @@
             renderTable(filtered);
         }
 
-        // EXPORTACIÓN A EXCEL NATIVO (.XLSX)
         function exportExcel() {
             if (clientsData.length === 0) {
                 alert("No hay datos cargados para exportar.");
                 return;
             }
 
-            // Formato estructurado idéntico a las columnas originales de la distribuidora
             const formattedData = clientsData.map(item => ({
                 "ID": item.id,
                 "RAZON SOCIAL": item.nombre,
                 "DIRECCION": item.direccion,
                 "LOCALIDAD": item.localidad,
                 "CANAL": item.canal,
-                "Venta ene-oct (miles $)": item.venta,
+                "Venta ene-oct": item.venta,
                 "Estado": item.estado,
                 "OBSERVACIONES": item.observacion
             }));
 
-            // Generar libro de trabajo Excel
             const worksheet = XLSX.utils.json_to_sheet(formattedData);
+            
+            const range = XLSX.utils.decode_range(worksheet['!ref']);
+            for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+                const cellRef = XLSX.utils.encode_cell({ r: R, c: 6 });
+                if (worksheet[cellRef]) {
+                    const val = (worksheet[cellRef].v || '').toUpperCase();
+                    if (!worksheet[cellRef].s) worksheet[cellRef].s = {};
+                    if (val === 'ACTIVO') {
+                        worksheet[cellRef].s = { fill: { fgColor: { rgb: "D1FAE5" } }, font: { color: { rgb: "065F46" }, bold: true } };
+                    } else if (val === 'BAJA') {
+                        worksheet[cellRef].s = { fill: { fgColor: { rgb: "FEE2E2" } }, font: { color: { rgb: "991B1B" }, bold: true } };
+                    } else if (val === 'OTRO VENDEDOR') {
+                        worksheet[cellRef].s = { fill: { fgColor: { rgb: "FEF3C7" } }, font: { color: { rgb: "92400E" }, bold: true } };
+                    }
+                }
+            }
+
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Relevamiento");
 
-            // Autoajustar ancho de columnas para un acabado prolijo
             const max_cols = [
-                { wch: 12 }, // ID
-                { wch: 30 }, // RAZON SOCIAL
-                { wch: 35 }, // DIRECCION
-                { wch: 15 }, // LOCALIDAD
-                { wch: 12 }, // CANAL
-                { wch: 22 }, // VENTA
-                { wch: 18 }, // ESTADO
-                { wch: 30 }  // OBSERVACIONES
+                { wch: 12 }, { wch: 28 }, { wch: 32 }, { wch: 15 },
+                { wch: 12 }, { wch: 18 }, { wch: 18 }, { wch: 30 }
             ];
             worksheet['!cols'] = max_cols;
 
-            // Descargar el archivo .xlsx
             const fecha = new Date().toISOString().slice(0, 10);
             XLSX.writeFile(workbook, `Relevamiento_Clientes_${fecha}.xlsx`);
         }
@@ -361,8 +300,8 @@
             clientsData = [
                 { id: "0000033389", nombre: "Abraham Alejandra", direccion: "Lerma Y Alsina Bº S Isidro", localidad: "Tartagal", canal: "Kiosco", venta: "sin compra", estado: "ACTIVO", observacion: "" },
                 { id: "0000092682", nombre: "Acevedo Pablo", direccion: "9 De Julio 1115", localidad: "Tartagal", canal: "No Trad.", venta: "473", estado: "ACTIVO", observacion: "" },
-                { id: "0000093668", nombre: "Adanto Ana", direccion: "J.L.Borges 260", localidad: "Tartagal", canal: "Kiosco", venta: "sin compra", estado: "BAJA", observacion: "Local cerrado" },
-                { id: "0000311143", nombre: "Aguero Juan Matias", direccion: "Araoz 505", localidad: "Tartagal", canal: "Kiosco", venta: "sin compra", estado: "OTRO VENDEDOR", observacion: "Compró bajo cód. mostrador" }
+                { id: "0000093668", nombre: "Adanto Ana", direccion: "J.L.Borges 260", localidad: "Tartagal", canal: "Kiosco", venta: "sin compra", estado: "BAJA", observacion: "Local cerrado permanentemente" },
+                { id: "0000311143", nombre: "Aguero Juan Matias", direccion: "Araoz 505", localidad: "Tartagal", canal: "Kiosco", venta: "sin compra", estado: "OTRO VENDEDOR", observacion: "Compra directo por mostrador" }
             ];
             renderTable();
         }
